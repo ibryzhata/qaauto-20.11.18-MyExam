@@ -1,10 +1,12 @@
 package page;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -20,11 +22,12 @@ public class FirstListResultPage {
     @FindBy(xpath = "//div[@id='resultStats']")
     private WebElement resultMessage;
 
-    @FindBy(xpath ="//div[@class='srg']/div[@class='g']")
+    @FindBy(xpath ="//div[@class='g']|// div/h3[@class='bNg8Rb']")
     private List<WebElement> searchListResults;
 
     @FindBy(xpath ="//td/a[@aria-label='Page 2']")
-    private WebElement secondListResult;
+
+    private WebElement secondPage;
 
 
     public FirstListResultPage(WebDriver webDriver) {
@@ -56,7 +59,7 @@ public class FirstListResultPage {
                     .executeScript("arguments[0].scrollIntoView(true);", searchResult);
 
             String searchResultText =  searchResult.getText();
-            searchResultLists.add(searchResult.getText());
+            searchResultLists.add(searchResultText);
         }
         return searchResultLists;
     }
@@ -67,9 +70,8 @@ public class FirstListResultPage {
     */
 
     public SecondListResultPage goTo2Page(){
-        WebDriverWait wait=new WebDriverWait(webDriver, 5);
-        wait.until(ExpectedConditions.elementToBeClickable(secondListResult));
-               secondListResult.click();
+
+        secondPage.click();
 
         return new SecondListResultPage(webDriver);
     }

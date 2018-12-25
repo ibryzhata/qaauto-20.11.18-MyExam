@@ -12,23 +12,27 @@ import java.util.List;
 public class SecondListResultPage {
     private WebDriver webDriver;
 
-    @FindBy(xpath = "///a[@id='pnprev']")
+    @FindBy(xpath = "//a[@id='pnprev']")
     private WebElement previousPage;
 
     @FindBy(xpath ="//div[@class='g']")
-    private List<WebElement> searchSecondListResults;
+    private List<WebElement> secondListResults;
 
     public SecondListResultPage(WebDriver webDriver) {
         this.webDriver = webDriver;
         PageFactory.initElements(webDriver, this);
     }
 
+    public boolean isLoaded(){
+        return previousPage.isDisplayed();
+    }
+
     /**
      * Method that counts the number of items in the list on first page
      */
 
-    public int getCountSearchSecondResult() {
-        return searchSecondListResults.size();
+    public int getCountSecondResult() {
+        return secondListResults.size();
     }
 
     /**
@@ -36,15 +40,15 @@ public class SecondListResultPage {
      * @return search Result List;
      */
 
-    public List<String> getSearchSecondResultLists() {
-        List<String> searchResultListsSecond = new ArrayList<String>();
-        for (WebElement searchResultListSecond : searchSecondListResults) {
+    public List<String> getSecondListResults() {
+        List<String> resultsSecondList = new ArrayList<String>();
+        for (WebElement resultSecondList : secondListResults) {
             ((JavascriptExecutor) webDriver)
-                    .executeScript("arguments[0].scrollIntoView(true);", searchResultListSecond);
+                    .executeScript("arguments[0].scrollIntoView(true);", resultSecondList);
 
-            String searchResultListsSecondText =  searchResultListSecond.getText();
-            searchResultListsSecond.add(searchResultListSecond.getText());
+            String resultSecondListText =  resultSecondList.getText();
+            resultsSecondList.add(resultSecondListText);
         }
-        return searchResultListsSecond;
+        return resultsSecondList;
     }
 }
